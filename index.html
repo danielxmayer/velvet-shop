@@ -1,1 +1,678 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Velvet Shop — A box of Czech soul</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:    #14110e;
+  --paper:  #f4ede0;
+  --warm:   #ede3d0;
+  --deep:   #1e1a15;
+  --red:    #8c1f1f;
+  --gold:   #b8882e;
+  --muted:  #7a6f62;
+  --light:  #cfc5b0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Karla', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--paper);
+  border-bottom: 1px solid rgba(20,17,14,0.08);
+  padding: 1.1rem 3rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; font-weight: 400; letter-spacing: 0.08em;
+}
+.logo-dot { color: var(--red); }
+nav a {
+  font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none;
+  transition: color 0.2s;
+}
+nav a:hover { color: var(--ink); }
+
+/* ── HERO ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  min-height: calc(100vh - 56px);
+}
+
+.hero-divider {
+  background: rgba(20,17,14,0.1);
+  align-self: stretch;
+}
+
+.hero-left {
+  padding: 5rem 4rem 4rem 3rem;
+  display: flex; flex-direction: column; justify-content: center;
+  border-right: none;
+}
+
+.hero-right {
+  padding: 5rem 3rem 4rem 4rem;
+  display: flex; flex-direction: column; justify-content: center;
+  background: var(--warm);
+}
+
+/* Quote */
+.quote {
+  margin-bottom: 3.5rem;
+  position: relative;
+  padding-left: 1.5rem;
+}
+.quote::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: var(--red);
+}
+.quote-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 4.5rem; line-height: 0.6;
+  color: var(--red); opacity: 0.2;
+  display: block; margin-bottom: 0.5rem;
+}
+.quote-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 1.25rem; font-weight: 300;
+  line-height: 1.65; color: var(--ink);
+}
+.quote-attr {
+  margin-top: 0.9rem;
+  font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* Tagline */
+.eyebrow {
+  font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.75rem;
+}
+
+.hero-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.6rem, 3.5vw, 3.8rem);
+  font-weight: 300; line-height: 1.12;
+  margin-bottom: 2rem;
+}
+.hero-headline em { font-style: italic; color: var(--red); }
+
+/* Problem statement */
+.problem {
+  font-size: 0.9rem; line-height: 1.8; color: var(--muted);
+  margin-bottom: 1.5rem;
+  max-width: 460px;
+}
+.problem strong { color: var(--ink); font-weight: 500; }
+
+.solution {
+  font-size: 0.9rem; line-height: 1.8; color: var(--muted);
+  margin-bottom: 1.5rem; max-width: 460px;
+}
+
+.context-line {
+  font-size: 0.88rem; line-height: 1.8; color: var(--muted);
+  margin-bottom: 2.5rem; max-width: 460px;
+  padding: 1rem 1.25rem;
+  border-left: 2px solid var(--light);
+  background: var(--warm);
+  font-style: italic;
+}
+
+/* Email form */
+.form-label {
+  font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 0.6rem;
+}
+.email-wrap { display: flex; max-width: 420px; border: 1px solid var(--ink); }
+.email-wrap input {
+  flex: 1; padding: 0.85rem 1rem;
+  background: transparent; border: none; outline: none;
+  font-family: 'Karla', sans-serif; font-size: 0.9rem; color: var(--ink);
+}
+.email-wrap input::placeholder { color: var(--light); }
+.email-wrap button {
+  padding: 0.85rem 1.4rem;
+  background: var(--ink); color: var(--paper);
+  border: none; cursor: pointer;
+  font-family: 'Karla', sans-serif;
+  font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+  transition: background 0.2s; white-space: nowrap;
+}
+.email-wrap button:hover { background: var(--red); }
+.form-note {
+  font-size: 0.68rem; color: var(--light); margin-top: 0.5rem;
+}
+
+/* Right side — box preview */
+.box-preview-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; font-weight: 400; letter-spacing: 0.06em;
+  color: var(--muted); text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.preview-items { display: flex; flex-direction: column; gap: 0; }
+
+.preview-item {
+  display: grid; grid-template-columns: 48px 1fr;
+  gap: 1rem; align-items: start;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid rgba(20,17,14,0.07);
+  opacity: 0; animation: rise 0.5s ease both;
+}
+.preview-item:nth-child(1) { animation-delay: 0.1s; }
+.preview-item:nth-child(2) { animation-delay: 0.2s; }
+.preview-item:nth-child(3) { animation-delay: 0.3s; }
+.preview-item:nth-child(4) { animation-delay: 0.4s; }
+.preview-item:nth-child(5) { animation-delay: 0.5s; border-bottom: none; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.item-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem; font-weight: 300; color: var(--light);
+  line-height: 1;
+}
+.item-info {}
+.item-name {
+  font-size: 0.88rem; font-weight: 500; color: var(--ink);
+  margin-bottom: 0.2rem;
+}
+.item-story {
+  font-size: 0.75rem; color: var(--muted); line-height: 1.5;
+}
+
+.box-select-prompt {
+  margin-top: 2.5rem;
+  padding: 1.25rem;
+  background: var(--paper);
+  border: 1px solid rgba(20,17,14,0.1);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.box-select-text {
+  font-size: 0.82rem; color: var(--muted);
+}
+.box-select-text strong { color: var(--ink); font-weight: 500; }
+.down-arrow {
+  font-size: 1.2rem; color: var(--gold); animation: bob 2s ease infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+/* ── BOXES ── */
+.boxes-section {
+  padding: 6rem 3rem;
+  background: var(--deep);
+  color: var(--paper);
+}
+.section-header { margin-bottom: 3.5rem; }
+.section-header .eyebrow { margin-bottom: 0.75rem; }
+.section-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 2.5vw, 2.6rem); font-weight: 300;
+}
+
+.boxes-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: rgba(244,237,224,0.08);
+  max-width: 1100px;
+}
+.box-card {
+  background: var(--deep); padding: 2.25rem;
+  display: flex; flex-direction: column;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+.box-card:hover { background: #252018; }
+.box-card.featured {
+  background: #252018;
+  outline: 1px solid rgba(184,136,46,0.3);
+}
+
+.box-tier {
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.box-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; font-weight: 300; margin-bottom: 0.6rem;
+}
+.box-tagline {
+  font-size: 0.82rem; color: rgba(244,237,224,0.5);
+  line-height: 1.7; margin-bottom: 1.75rem; flex: 1;
+}
+
+.box-contents {
+  display: flex; flex-direction: column; gap: 0.35rem;
+  margin-bottom: 2rem;
+}
+.box-content-item {
+  font-size: 0.75rem; color: rgba(244,237,224,0.45);
+  display: flex; gap: 0.6rem; align-items: flex-start;
+}
+.box-content-item::before {
+  content: '—'; color: var(--gold); flex-shrink: 0; opacity: 0.6;
+}
+
+.box-bottom {
+  border-top: 1px solid rgba(244,237,224,0.08);
+  padding-top: 1.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.box-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem; font-weight: 300;
+}
+.box-price-note {
+  font-size: 0.65rem; color: rgba(244,237,224,0.3); margin-top: 0.1rem;
+}
+.reserve-btn {
+  padding: 0.7rem 1.4rem;
+  border: 1px solid rgba(244,237,224,0.2);
+  background: transparent; color: var(--paper);
+  cursor: pointer; font-family: 'Karla', sans-serif;
+  font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+  transition: all 0.2s;
+}
+.reserve-btn:hover { background: var(--red); border-color: var(--red); }
+.box-card.featured .reserve-btn {
+  border-color: var(--gold); color: var(--gold);
+}
+.box-card.featured .reserve-btn:hover {
+  background: var(--gold); color: var(--deep);
+}
+
+/* ── MANIFESTO ── */
+.manifesto {
+  padding: 7rem 3rem;
+  max-width: 860px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 2fr; gap: 5rem;
+  align-items: start;
+}
+.manifesto-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-weight: 300; font-style: italic;
+  color: var(--muted); line-height: 1.5;
+  position: sticky; top: 6rem;
+}
+.manifesto-body {}
+.manifesto-body h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 2.5vw, 2.4rem); font-weight: 300;
+  line-height: 1.25; margin-bottom: 1.5rem;
+}
+.manifesto-body h2 em { font-style: italic; color: var(--red); }
+.manifesto-body p {
+  font-size: 0.9rem; line-height: 1.9; color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+.manifesto-close {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 1.05rem; color: var(--ink);
+  margin-top: 2rem; padding-top: 1.5rem;
+  border-top: 1px solid var(--light);
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink); color: var(--paper);
+  padding: 2.5rem 3rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; font-weight: 300;
+}
+footer small {
+  font-size: 0.68rem; color: rgba(244,237,224,0.3);
+  letter-spacing: 0.08em;
+}
+
+/* ── MODAL ── */
+.overlay {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(20,17,14,0.75);
+  align-items: center; justify-content: center;
+}
+.overlay.open { display: flex; }
+.modal {
+  background: var(--paper); padding: 3rem;
+  max-width: 460px; width: 90%;
+  position: relative;
+  animation: rise 0.25s ease;
+}
+.modal .eyebrow { margin-bottom: 0.5rem; }
+.modal h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.9rem; font-weight: 300; margin-bottom: 0.75rem;
+}
+.modal p {
+  font-size: 0.85rem; color: var(--muted); line-height: 1.75;
+  margin-bottom: 1.75rem;
+}
+.modal-fields { display: flex; flex-direction: column; gap: 0.6rem; }
+.modal-fields input {
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(20,17,14,0.15);
+  background: transparent; font-family: 'Karla', sans-serif;
+  font-size: 0.9rem; outline: none; width: 100%;
+  transition: border-color 0.2s;
+}
+.modal-fields input:focus { border-color: var(--ink); }
+.modal-fields button {
+  padding: 0.9rem;
+  background: var(--ink); color: var(--paper);
+  border: none; cursor: pointer;
+  font-family: 'Karla', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
+  transition: background 0.2s;
+}
+.modal-fields button:hover { background: var(--red); }
+.modal-x {
+  position: absolute; top: 1rem; right: 1.25rem;
+  background: none; border: none; font-size: 1.5rem;
+  cursor: pointer; color: var(--light); line-height: 1;
+}
+.modal-x:hover { color: var(--ink); }
+.modal-success { display: none; text-align: center; padding: 1rem 0; }
+.modal-success h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; margin-bottom: 0.5rem; }
+.modal-success p { font-size: 0.85rem; color: var(--muted); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 920px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-divider { display: none; }
+  .hero-left { padding: 3.5rem 1.5rem 2.5rem; }
+  .hero-right { padding: 2rem 1.5rem 3.5rem; }
+  .boxes-grid { grid-template-columns: 1fr; }
+  .boxes-section { padding: 4rem 1.5rem; }
+  .manifesto { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.5rem; }
+  .manifesto-label { position: static; }
+  nav { padding: 1rem 1.5rem; }
+  footer { padding: 2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">The Velvet Shop<span class="logo-dot">.</span></div>
+  <a href="#boxes">See the boxes ↓</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+
+  <div class="hero-left">
+    <div class="quote">
+      <span class="quote-mark">"</span>
+      <p class="quote-text">The truth is not simply what you think it is; it is also the circumstances in which it is said, and to whom, why, and how.</p>
+      <p class="quote-attr">— Václav Havel &nbsp;·&nbsp; playwright &nbsp;·&nbsp; dissident &nbsp;·&nbsp; president</p>
+    </div>
+
+    <p class="eyebrow">A box of Czech soul</p>
+    <h1 class="hero-headline">Most souvenir shops<br>on Prague's Royal Way<br>are <em>not Czech.</em></h1>
+
+    <p class="problem">
+      They are owned and staffed by non-Czechs, filled with <strong>magnets made in China</strong> and postcards with no real link to local life.
+    </p>
+
+    <p class="solution">
+      We believe Czech culture deserves better. We curate boxes of authentic Czech culture — handmade puppets, retro foods, samizdat stories and artisan prints, all made in the Czech Republic and chosen for their story, not their tourist appeal.
+    </p>
+
+    <p class="context-line">
+      Each object comes with context: who made it, where it comes from, and why it matters today — so you don't just take home an object, you take home a piece of lived Czech experience.
+    </p>
+
+    <p class="form-label">Launching soon — join the waitlist</p>
+    <div class="email-wrap">
+      <input type="email" id="hero-email" placeholder="your@email.com">
+      <button onclick="heroJoin()">Notify me</button>
+    </div>
+    <p class="form-note">No spam. One email when we open.</p>
+  </div>
+
+  <div class="hero-divider"></div>
+
+  <div class="hero-right">
+    <p class="box-preview-title">What's inside the Story box</p>
+    <div class="preview-items">
+      <div class="preview-item">
+        <span class="item-num">01</span>
+        <div class="item-info">
+          <p class="item-name">Hand-carved marionette</p>
+          <p class="item-story">UNESCO-recognised craft, made in a Prague workshop since the 1990s. Czech puppetry is where UNIMA — the world association of puppeteers — was founded.</p>
+        </div>
+      </div>
+      <div class="preview-item">
+        <span class="item-num">02</span>
+        <div class="item-info">
+          <p class="item-name">Samizdat zine</p>
+          <p class="item-story">A replica of the underground publications Havel and Czech dissidents typed and passed hand-to-hand behind the Iron Curtain. Truth on paper, at any risk.</p>
+        </div>
+      </div>
+      <div class="preview-item">
+        <span class="item-num">03</span>
+        <div class="item-info">
+          <p class="item-name">Kolonáda wafers</p>
+          <p class="item-story">Baked in Karlovy Vary since 1856, where European aristocracy came to take the waters. The recipe hasn't changed in 170 years.</p>
+        </div>
+      </div>
+      <div class="preview-item">
+        <span class="item-num">04</span>
+        <div class="item-info">
+          <p class="item-name">Art print — Czech artist</p>
+          <p class="item-story">A limited-edition print by a Prague-based illustrator. Every edition is different. Every one is signed.</p>
+        </div>
+      </div>
+      <div class="preview-item">
+        <span class="item-num">05</span>
+        <div class="item-info">
+          <p class="item-name">Story booklet</p>
+          <p class="item-story">"A brief history of Czech soul" — eight pages with the full story behind every item in the box.</p>
+        </div>
+      </div>
+    </div>
+    <div class="box-select-prompt">
+      <div class="box-select-text">Three boxes available · <strong>from €49</strong></div>
+      <span class="down-arrow">↓</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- BOXES -->
+<section class="boxes-section" id="boxes">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-header">
+      <p class="eyebrow">Choose your box</p>
+      <h2>Three ways to experience Czech culture</h2>
+    </div>
+    <div class="boxes-grid">
+
+      <div class="box-card">
+        <p class="box-tier">Taster</p>
+        <h3 class="box-name">Velvet Taster</h3>
+        <p class="box-tagline">A first encounter with Czech soul — one flavour, one story, and one cultural surprise.</p>
+        <div class="box-contents">
+          <div class="box-content-item">Kolonáda wafers, Karlovy Vary 1856</div>
+          <div class="box-content-item">Pikník condensed milk tube</div>
+          <div class="box-content-item">Becherovka miniature (50 ml)</div>
+          <div class="box-content-item">Art postcard — local artist</div>
+          <div class="box-content-item">Story card + QR code</div>
+        </div>
+        <div class="box-bottom">
+          <div>
+            <div class="box-price">€49</div>
+            <div class="box-price-note">+ shipping worldwide</div>
+          </div>
+          <button class="reserve-btn" onclick="openModal('Velvet Taster','49')">Reserve</button>
+        </div>
+      </div>
+
+      <div class="box-card featured">
+        <p class="box-tier">★ Bestseller</p>
+        <h3 class="box-name">Velvet Story</h3>
+        <p class="box-tagline">The complete experience. Five objects, five stories, one Czech soul — food, print and something to keep on your shelf.</p>
+        <div class="box-contents">
+          <div class="box-content-item">Hand-carved marionette (UNESCO craft)</div>
+          <div class="box-content-item">Samizdat zine — Czech resistance</div>
+          <div class="box-content-item">Moravian wine, small-batch</div>
+          <div class="box-content-item">Retro snack selection</div>
+          <div class="box-content-item">Art print A5 + story booklet</div>
+        </div>
+        <div class="box-bottom">
+          <div>
+            <div class="box-price">€89</div>
+            <div class="box-price-note">+ shipping worldwide</div>
+          </div>
+          <button class="reserve-btn" onclick="openModal('Velvet Story','89')">Reserve</button>
+        </div>
+      </div>
+
+      <div class="box-card">
+        <p class="box-tier">Collection</p>
+        <h3 class="box-name">Velvet Collection</h3>
+        <p class="box-tagline">For the collector. A premium marionette, essays by Václav Havel, and a bottle of Czech wine to open when the stories sink in.</p>
+        <div class="box-contents">
+          <div class="box-content-item">Artist marionette with certificate</div>
+          <div class="box-content-item">Václav Havel — essays in English</div>
+          <div class="box-content-item">Samizdat zine</div>
+          <div class="box-content-item">Moravian wine 375 ml</div>
+          <div class="box-content-item">Art print A4 + 5× postcards</div>
+        </div>
+        <div class="box-bottom">
+          <div>
+            <div class="box-price">€149</div>
+            <div class="box-price-note">+ shipping worldwide</div>
+          </div>
+          <button class="reserve-btn" onclick="openModal('Velvet Collection','149')">Reserve</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div class="manifesto-label">
+    Why we exist
+  </div>
+  <div class="manifesto-body">
+    <h2>We don't sell souvenirs —<br>we deliver <em>truth</em><br>from real Czech lives.</h2>
+    <p>Václav Havel spent his life insisting on authenticity over performance. He wrote plays by hand, passed manuscripts through underground networks, and spent years in prison for believing that words — real words, true words — matter.</p>
+    <p>That same principle guides every item we choose. We don't sell tourism. We don't curate what's convenient. We find the things that have a story worth telling, the makers who still work by hand, the foods whose recipes haven't changed in a century.</p>
+    <p class="manifesto-close">Each box is a piece of lived Czech experience. Open it slowly.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">The Velvet Shop</div>
+  <small>Praha &nbsp;·&nbsp; Czech Republic &nbsp;·&nbsp; Worldwide shipping</small>
+  <small>© 2025</small>
+</footer>
+
+<!-- MODAL -->
+<div class="overlay" id="modal" onclick="closeOut(event)">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal()">×</button>
+    <div id="modal-inner">
+      <p class="eyebrow" id="modal-box">Velvet Story</p>
+      <h3>Launching soon</h3>
+      <p>Leave your email and we'll notify you the moment we open — with early access and first-launch pricing.</p>
+      <div class="modal-fields">
+        <input type="email" id="modal-email" placeholder="your@email.com">
+        <button onclick="modalJoin()">Reserve my spot &mdash; €<span id="modal-price">89</span></button>
+      </div>
+    </div>
+    <div class="modal-success" id="modal-success">
+      <h3>You're on the list.</h3>
+      <p>We'll email you when The Velvet Shop opens. Thank you for your interest in real Czech culture.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function openModal(name, price) {
+  document.getElementById('modal-box').textContent = name;
+  document.getElementById('modal-price').textContent = price;
+  document.getElementById('modal-inner').style.display = 'block';
+  document.getElementById('modal-success').style.display = 'none';
+  document.getElementById('modal').classList.add('open');
+  setTimeout(() => document.getElementById('modal-email').focus(), 50);
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+function closeOut(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+async function submitToFormspree(email, box) {
+  try {
+    await fetch('https://formspree.io/f/mgorowjo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ email: email, box: box })
+    });
+  } catch(e) { console.log('Formspree error', e); }
+}
+async function modalJoin() {
+  const v = document.getElementById('modal-email').value;
+  if (!v || !v.includes('@')) { document.getElementById('modal-email').focus(); return; }
+  const box = document.getElementById('modal-box').textContent;
+  await submitToFormspree(v, box);
+  document.getElementById('modal-inner').style.display = 'none';
+  document.getElementById('modal-success').style.display = 'block';
+}
+async function heroJoin() {
+  const v = document.getElementById('hero-email').value;
+  if (!v || !v.includes('@')) { document.getElementById('hero-email').focus(); return; }
+  await submitToFormspree(v, 'Hero signup');
+  const btn = document.querySelector('.email-wrap button');
+  btn.textContent = "You're on the list ✓";
+  btn.style.background = '#2d5a1b';
+  document.getElementById('hero-email').disabled = true;
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+
+</body>
+</html>
